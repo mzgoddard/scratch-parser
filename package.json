@@ -10,20 +10,26 @@
     "url": "https://github.com/LLK/scratch-parser.git"
   },
   "scripts": {
-    "commitmsg": "commitlint -e $GIT_PARAMS",
+    "build": "npm run build:sb2 && npm run build:sprite2 && npm run build:sb3 && npm run build:sprite3",
+    "build:sb2": "ajv compile -r lib/sb2_definitions.json -s lib/sb2_schema.json -o dist/sb2_schema.js",
+    "build:sprite2": "ajv compile -r lib/sb2_definitions.json -s lib/sprite2_schema.json -o dist/sprite2_schema.js",
+    "build:sb3": "ajv compile -r lib/sb3_definitions.json -s lib/sb3_schema.json -o dist/sb3_schema.js",
+    "build:sprite3": "ajv compile -r lib/sb3_definitions.json -s lib/sprite3_schema.json -o dist/sprite3_schema.js",
     "test:lint": "eslint . --ext=js",
     "test:unit": "tap test/unit/*.js",
     "test:integration": "tap test/integration/*.js",
     "test:coverage": "tap test/{unit,integration}/*.js --coverage --coverage-report=lcov",
     "test:benchmark": "node test/benchmark/performance.js",
-    "test": "npm run test:lint && npm run test:unit && npm run test:integration",
+    "test": "npm run test:lint && npm run build && npm run test:unit && npm run test:integration",
     "semantic-release": "semantic-release"
   },
   "dependencies": {
     "ajv": "6.3.0",
+    "ajv-cli": "^3.0.0",
     "async": "2.6.0",
+    "gzip-js": "0.3.2",
     "jszip": "3.1.5",
-    "gzip-js": "0.3.2"
+    "raw-loader": "^1.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "6.1.0",
